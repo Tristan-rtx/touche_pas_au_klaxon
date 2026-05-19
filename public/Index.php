@@ -1,26 +1,23 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// On charge l'autoloader de Composer pour avoir accès au routeur
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Buki\Router\Router;
 
-// Initialisation du routeur
 $router = new Router([
     'paths' => [
-        'controllers' => 'app/Controllers',
+        // On remonte d'un dossier (..) pour trouver "app"
+        'controllers' => __DIR__ . '/../app/Controllers',
     ],
     'namespaces' => [
         'controllers' => 'App\Controllers',
-    ]
+    ],
+    'debug' => true
 ]);
 
-// --- DÉFINITION DES ROUTES ---
+// Route pour la page d'accueil
+$router->get('/', 'HomeController@index');
 
-// Route pour la page d'accueil (URL : / )
-$router->get('/', function() {
-    return "<h1>Bienvenue sur l'application de covoiturage ! 🚗</h1><p>Le routeur fonctionne parfaitement.</p>";
-});
-
-// --- EXÉCUTION DU ROUTEUR ---
 $router->run();
