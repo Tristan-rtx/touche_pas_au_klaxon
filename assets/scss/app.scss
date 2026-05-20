@@ -1,0 +1,12 @@
+// 1. Déclaration des variables personnalisées (Ex: les couleurs de ton entreprise)
+$primary: #2b59c3; // Tu pourras changer pour la couleur exacte de ta charte !
+$success: #198754;
+
+// 2. Importation de Bootstrap
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// 3. Ton style personnalisé si besoin
+body {
+    background-color: #f8f9fa;
+    padding-top: 2rem;
+}
