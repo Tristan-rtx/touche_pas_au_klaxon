@@ -8,7 +8,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4 shadow-sm">
-<div class="container">
+        <div class="container">
             <a class="navbar-brand fw-bold" href="/">🚗 Covoiturage CE</a>
             <div class="ms-auto">
                 <?php if (isset($_SESSION['user'])): ?>
@@ -33,32 +33,6 @@
                         <a href="/trajet/creer" class="btn btn-success fw-bold px-4 shadow-sm">➕ Proposer un trajet</a>
                     <?php endif; ?>
                 </div>
-                
-                <div class="table-responsive shadow-sm rounded">
-                    ```
-
----
-
-### Étape 2 : Ajouter la fonction de Déconnexion dans `AuthController`
-
-Si l'employé veut se déconnecter, il faut pouvoir détruire la session. Ouvre ton fichier **`app/Controllers/AuthController.php`** et ajoute cette méthode à la fin de la classe :
-
-```php
-// 3. Déconnexion de l'utilisateur
-public function logout()
-{
-    session_start(); // Au cas où
-    unset($_SESSION['user']); // On supprime l'utilisateur de la session
-    session_destroy(); // On détruit la session
-    
-    header('Location: /'); // Retour à l'accueil
-    exit;
-}
-
-    <div class="container">
-        <div class="row my-4">
-            <div class="col">
-                <h1 class="display-6 fw-bold text-secondary mb-4">Trajets disponibles</h1>
                 
                 <div class="table-responsive shadow-sm rounded">
                     <table class="table table-striped table-hover align-middle mb-0">

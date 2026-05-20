@@ -27,4 +27,8 @@ $router->post('/login', 'AuthController@login');
 
 $router->get('/logout', 'AuthController@logout');
 
+$router->get('/trajet/creer', 'TrajetController@create');
+
+$router->post('/trajet/creer', 'TrajetController@store');
+
 $router->run();
