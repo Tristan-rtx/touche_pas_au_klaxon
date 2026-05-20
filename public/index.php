@@ -1,4 +1,5 @@
 <?php
+session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -19,5 +20,11 @@ $router = new Router([
 
 // Route pour la page d'accueil
 $router->get('/', 'HomeController@index');
+
+$router->get('/login', 'AuthController@showLogin');
+
+$router->post('/login', 'AuthController@login');
+
+$router->get('/logout', 'AuthController@logout');
 
 $router->run();
