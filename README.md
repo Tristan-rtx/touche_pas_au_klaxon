@@ -67,3 +67,34 @@ Ouvrez l'URL locale fournie dans votre navigateur web : `http://localhost:8000` 
 - Profil Administrateur :
   - Email : `admin` (ou `admin@entreprise.fr`)
   - Mot de passe : `adminpass`
+
+  erDiagram
+    %% Les entités et leurs attributs
+    UTILISATEUR {
+        int id_utilisateur PK
+        string nom
+        string prenom
+        string email
+        string mot_de_passe
+        string telephone
+        string role
+    }
+
+    TRAJET {
+        int id_trajet PK
+        datetime gdh_depart
+        int places_disponibles
+        string description
+    }
+
+    AGENCE {
+        int id_agence PK
+        string nom_agence
+        string ville
+    }
+
+    %% Les relations (Associations)
+    UTILISATEUR ||--o{ TRAJET : "Propose"
+    UTILISATEUR }o--o{ TRAJET : "Reserve"
+    AGENCE ||--o{ TRAJET : "Est_le_depart"
+    AGENCE ||--o{ TRAJET : "Est_l_arrivee"
