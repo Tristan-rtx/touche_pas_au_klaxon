@@ -49,4 +49,26 @@ class AuthController
         header('Location: /');
         exit;
     }
+
+    // 4. Afficher l'espace personnel de l'employé
+    public function profil()
+    {
+        // Sécurité
+        if (!isset($_SESSION['user'])) {
+            header('Location: /login');
+            exit;
+        }
+
+        $id_utilisateur = $_SESSION['user']['id_utilisateur'];
+
+        // 1. Récupérer les trajets en tant que conducteur
+        $trajetModel = new \App\Models\TrajetModel();
+        $mesConduites = $trajetModel->getTrajetsConducteur($id_utilisateur);
+
+        // 2. Récupérer les trajets en tant que passager
+        $userModel = new \App\Models\UtilisateurModel();
+        $mesVoyages = $userModel->getTrajetsPassager($id_utilisateur);
+
+        require_once __DIR__ . '/../Views/profil.php';
+    }
 }

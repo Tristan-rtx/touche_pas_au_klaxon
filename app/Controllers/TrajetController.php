@@ -62,4 +62,48 @@ class TrajetController
         header('Location: /');
         exit;
     }
-} // <--- ELLE EST ICI MAINTENANT, BIEN À SA PLACE POUR TOUT FERMER !
+    // 3. Réserver une place sur un trajet
+    public function reserve()
+    {
+        // Sécurité
+        if (!isset($_SESSION['user'])) {
+            header('Location: /login');
+            exit;
+        }
+
+        $id_trajet = $_GET['id'] ?? null;
+        $id_utilisateur = $_SESSION['user']['id_utilisateur'];
+
+        if ($id_trajet) {
+            $db = new \PDO('mysql:host=127.0.0.1;dbname=covoiturage_ce;charset=utf8', 'root', '');
+
+            // Vérifier s'il reste des places et si l'utilisateur n'a pas déjà réservé
+            $stmt = $db->prepare("SELECT places_disponibles FROM trajet WHERE id_trajet = :id_trajet");
+            $stmt->execute(['id_trajet' => $id_trajet]);
+            $trajet = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            if ($trajet && $trajet['places_disponibles'] > 0) {
+                try {
+                    // 1. Insérer la réservation (le TRY/CATCH évite de réserver deux fois le même trajet)
+                    $stmt = $db->prepare("INSERT INTO reservation (id_utilisateur, id_trajet) VALUES (:id_utilisateur, :id_trajet)");
+                    $stmt->execute([
+                        'id_utilisateur' => $id_utilisateur,
+                        'id_trajet'      => $id_trajet
+                    ]);
+
+                    // 2. Décrémenter les places disponibles de 1
+                    $stmt = $db->prepare("UPDATE trajet SET places_disponibles = places_disponibles - 1 WHERE id_trajet = :id_trajet");
+                    $stmt->execute(['id_trajet' => $id_trajet]);
+
+                } catch (\PDOException $e) {
+                    // L'utilisateur a probablement déjà réservé (clé primaire dupliquée)
+                    // On peut stocker un message d'erreur en session si besoin
+                }
+            }
+        }
+
+        // Retour à l'accueil
+        header('Location: /');
+        exit;
+    }
+}

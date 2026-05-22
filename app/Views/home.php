@@ -12,6 +12,7 @@
             <a class="navbar-brand fw-bold" href="/">🚗 Covoiturage CE</a>
             <div class="ms-auto">
                 <?php if (isset($_SESSION['user'])): ?>
+                    <a href="/mon-espace" class="btn btn-outline-light btn-sm fw-bold me-2">📁 Mon Espace</a>
                     <span class="navbar-text text-white fw-bold me-3">
                         👋 Bonjour <?= htmlspecialchars($_SESSION['user']['prenom']) ?> !
                     </span>
@@ -35,7 +36,7 @@
                 </div>
                 
                 <div class="table-responsive shadow-sm rounded">
-                    <table class="table table-striped table-hover align-middle mb-0">
+                   <table class="table table-striped table-hover align-middle mb-0">
                         <thead class="table-primary">
                             <tr>
                                 <th>Départ</th>
@@ -43,6 +44,9 @@
                                 <th>Destination</th>
                                 <th>Date / Heure d'arrivée</th>
                                 <th class="text-center">Places disponibles</th>
+                                <?php if (isset($_SESSION['user'])): ?>
+                                    <th class="text-center">Action</th>
+                                <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,11 +62,22 @@
                                                 <?= htmlspecialchars($trajet['places_disponibles']) ?> / <?= htmlspecialchars($trajet['places_totales']) ?>
                                             </span>
                                         </td>
+                                        <?php if (isset($_SESSION['user'])): ?>
+                                            <td class="text-center">
+                                                <?php if ($trajet['id_utilisateur'] == $_SESSION['user']['id_utilisateur']): ?>
+                                                    <span class="badge bg-secondary">Votre trajet</span>
+                                                <?php elseif ($trajet['places_disponibles'] <= 0): ?>
+                                                    <span class="badge bg-danger">Complet</span>
+                                                <?php else: ?>
+                                                    <a href="/trajet/reserver?id=<?= $trajet['id_trajet'] ?>" class="btn btn-outline-primary btn-sm fw-bold px-3">Réserver</a>
+                                                <?php endif; ?>
+                                            </td>
+                                        <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="5" class="text-center py-4 text-muted">Aucun trajet disponible pour le moment.</td>
+                                    <td colspan="<?= isset($_SESSION['user']) ? 6 : 5 ?>" class="text-center py-4 text-muted">Aucun trajet disponible pour le moment.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>

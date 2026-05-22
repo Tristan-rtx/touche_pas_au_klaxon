@@ -31,4 +31,8 @@ $router->get('/trajet/creer', 'TrajetController@create');
 
 $router->post('/trajet/creer', 'TrajetController@store');
 
+$router->get('/trajet/reserver', 'TrajetController@reserve');
+
+$router->get('/mon-espace', 'AuthController@profil');
+
 $router->run();
