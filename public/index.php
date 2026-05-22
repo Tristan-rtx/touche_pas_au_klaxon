@@ -21,7 +21,7 @@ $router = new Router([
 // Route pour la page d'accueil
 $router->get('/', 'HomeController@index');
 
-$router->get('/login', 'AuthController@showLogin');
+$router->get('/login', 'AuthController@showLoginForm');
 
 $router->post('/login', 'AuthController@login');
 
@@ -34,5 +34,18 @@ $router->post('/trajet/creer', 'TrajetController@store');
 $router->get('/trajet/reserver', 'TrajetController@reserve');
 
 $router->get('/mon-espace', 'AuthController@profil');
+
+$router->get('/trajet/supprimer', 'TrajetController@delete');
+
+$router->get('/trajet/modifier', 'TrajetController@edit');
+$router->post('/trajet/modifier', 'TrajetController@update');
+
+$router->get('/admin', 'AdminController@dashboard');
+
+$router->post('/admin/agence/creer', 'AdminController@storeAgence');
+$router->post('/admin/agence/modifier', 'AdminController@updateAgence');
+$router->get('/admin/agence/supprimer', 'AdminController@deleteAgence');
+
+$router->get('/admin/trajet/supprimer', 'AdminController@deleteTrajet');
 
 $router->run();

@@ -6,7 +6,7 @@ INSERT INTO agence (nom_agence) VALUES
 ('Nantes'), ('Strasbourg'), ('Montpellier'), ('Bordeaux'), 
 ('Lille'), ('Rennes'), ('Reims');
 
--- 2. Insertion de l'administrateur --Le mot de passe de l'admin est admin123
+-- 2. Insertion de l'administrateur --Le mot de passe de l'admin est adminpass
 INSERT INTO utilisateur (nom, prenom, telephone, email, mot_de_passe, role) VALUES
 ('Admin', 'Super', '0102030405', 'admin@entreprise.fr', '$2y$10$wYwK9p5M.052I.H51mP73O6qUo81.p9.KIfEezm6P3uT1l9eLXZC2', 'ROLE_ADMIN');
 
